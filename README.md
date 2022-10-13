@@ -11,7 +11,7 @@ MyBatis运行示例
 ```properties
 # 数据库配置信息
 db.driver=com.mysql.cj.jdbc.Driver
-db.url=jdbc:mysql://localhost:53306/ssm_learn?serverTimezone=UTC
+db.url=jdbc:mysql://localhost:3306/ssm_learn?serverTimezone=UTC
 db.username=
 db.password=
 ```

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prprv.mybatis.mapper.SpecialMapper">
+    <!--
+        模糊查询直接用 #{} 会报错，因为 #{} 会被解析成一个占位符，而不是一个字符串
+        List<User> selectUserByLike(@Param("fuzzy") String fuzzy);
+    -->
+    <select id="selectUserByLike" resultType="User">
+        <!-- 使用 ${} 解决 -->
+        <!-- select * from t_user where username like '%${fuzzy}%' -->
+        <!-- 使用 concat 拼接可以使用 #{} -->
+        select * from t_user where username like concat('%', #{fuzzy}, '%')
+        <!-- 使用 "%"#{}"%" -->
+        <!-- select * from t_user where username like "%"#{fuzzy}"%" -->
+    </select>
+
+    <!-- 拼接ids: 9,10 -->
+    <!-- void deleteUserByIds(@Param("ids") String ids); -->
+    <delete id="deleteUserByIds">
+        delete from t_user where id in (${ids})
+    </delete>
+
+    <!-- 动态表名只能 ${} -->
+    <!-- List<User> selectUserByTableName(@Param("tableName") String tableName); -->
+    <select id="selectUserByTableName" resultType="User">
+        select * from ${tableName}
+    </select>
+
+    <!--
+        获取自增主键id
+        KeyProperty: 指定实体类的属性名赋值
+    -->
+    <!-- void insertUser(User user); -->
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user values(null,#{username},#{password},#{age},#{gender},#{email})
+    </insert>
+</mapper>

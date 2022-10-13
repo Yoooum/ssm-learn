@@ -5,3 +5,4 @@
 *.iml
 *.yml
 *.properties
+/mybatis-helloword/target/

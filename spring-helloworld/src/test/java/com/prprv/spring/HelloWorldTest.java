@@ -13,7 +13,7 @@ class HelloWorldTest {
     void main() {
         //获取IOC容器
         ApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
-        //获取IOC容器中的对象
+        //获取IOC容器中的bean
         HelloWorld helloWorld = (HelloWorld) ioc.getBean("HelloWorld");
         helloWorld.sayHello();
     }

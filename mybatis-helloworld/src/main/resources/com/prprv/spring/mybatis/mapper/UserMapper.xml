@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prprv.spring.mybatis.mapper.UserMapper">
+    <!-- mapper 接口和映射文件对应
+         1. mapper 接口的全限定名和映射文件的 namespace 属性值相同
+         2. mapper 接口的方法名和映射文件的 statement 的 id 属性值相同
+    -->
+
+    <!-- int insertUser(User user); -->
+    <!-- 通过 #{} 访问实体类中的属性名获取相应的属性值 -->
+    <insert id="insertUser">
+        insert into t_user values (null,#{username},#{password},#{age},#{gender},#{email})
+    </insert>
+
+    <!-- int updateUser(); -->
+    <update id="updateUser">
+        update t_user set username = 'root' where id = 1
+    </update>
+
+    <!-- int deleteUser(); -->
+    <delete id="deleteUser">
+        delete from t_user where id = 1
+    </delete>
+
+    <!-- User selectUserById(); -->
+    <!-- resultType: 返回值类型 -->
+    <!-- resultMap: 自定义映射 -->
+    <select id="selectUserById" resultType="User">
+        select * from t_user where id = 1
+    </select>
+
+    <!-- User selectUserByName(String username); -->
+    <!-- '${}' 本质是字符串拼接（外面要加单引号），#{里面可以随便写} 本质是占位符'?'赋值 -->
+    <select id="selectUserByName" resultType="User">
+        select * from t_user where username = #{username}
+    </select>
+
+    <!-- User checkLogin(String username, String password); -->
+    <!-- 多参数需要填 #{arg0} #{arg1} ... 或者 #{param0} #{param1} ... -->
+    <select id="checkLogin" resultType="User">
+        select * from t_user where username = #{arg0} and password = #{arg1}
+    </select>
+
+    <!-- 自定义Map -->
+    <!-- User checkLoginByMap(Map<String, Object> map); #{里面为Map的Key}-->
+    <select id="checkLoginByMap" resultType="User">
+        select * from t_user where username = #{username} and password = #{password}
+    </select>
+
+    <!-- 使用注解 @Param() -->
+    <!-- User checkLoginByParam(@Param("username") String username, @Param("password") String password); -->
+    <select id="checkLoginByParam" resultType="User">
+        select * from t_user where password = #{password} and username = #{username}
+    </select>
+
+    <!-- List<User> selectAllUser(); -->
+    <select id="selectAllUser" resultType="User">
+        select * from t_user
+    </select>
+</mapper>
